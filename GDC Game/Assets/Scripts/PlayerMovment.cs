@@ -8,17 +8,26 @@ public class PlayerMovment : MonoBehaviour
 
     public Rigidbody2D rb;
 
+    public Camera cam;
+
     private Vector2 moveDirection;
+    private Vector2 mousepos;
 
     // Update is called once per frame
     void Update()
     {
         ProcessInputs();
+
+         mousepos = cam.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void FixedUpdate()
     {
         Move();
+
+        Vector2 lookDir = mousepos - rb.position;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
     }
     void ProcessInputs()
     {
